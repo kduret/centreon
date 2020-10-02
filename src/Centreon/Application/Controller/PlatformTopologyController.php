@@ -183,11 +183,10 @@ class PlatformTopologyController extends AbstractController
         foreach ($platformCompleteTopology as $topology) {
             $topologyHelios = new PlatformTopologyHeliosFormat($topology);
             $topologiesHelios[] = $topologyHelios;
-            if ($topologyHelios->getRelation() !== null) {
+            if (!empty($topologyHelios->getRelation())) {
                 $edges[] = $topologyHelios->getRelation();
             }
         }
-
         $context = (new Context())->setGroups(self::SERIALIZER_GROUP_HELIOS);
         return $this->view([
             'graph' => [
