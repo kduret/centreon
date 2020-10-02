@@ -223,10 +223,7 @@ class PlatformTopologyRepositoryRDB extends AbstractRepositoryDRB implements Pla
         $statement->execute();
         while (($result = $statement->fetch(\PDO::FETCH_ASSOC)) !== false) {
             if ($result['config_group'] === 'output' && $result['config_key'] === 'host') {
-                empty($result['config_value'])
-                    ? $nodeRelation = 'peer_retention'
-                    : $nodeRelation = 'normal';
-                return $nodeRelation;
+                return empty($result['config_value']) ? 'peer_retention' : 'normal';
             }
         }
         return null;

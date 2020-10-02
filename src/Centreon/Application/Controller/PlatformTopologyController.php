@@ -154,21 +154,40 @@ class PlatformTopologyController extends AbstractController
         }
     }
 
+    /**
+     * Get the Topology of a platform with an adapted Helios Format.
+     *
+     * @return View
+     */
     public function getPlatformTopologyHelios(): View
     {
         $this->denyAccessUnlessGrantedForApiConfiguration();
 
+        /**
+         * Get the entire topology of the platform as an array of PlatformTopology instances
+         */
         $platformCompleteTopology = $this->platformTopologyService->getPlatformCompleteTopology();
         if ($platformCompleteTopology === null) {
             throw new EntityNotFoundException('Platform Topologies not found');
         }
         $context = (new Context())->setGroups(self::SERIALIZER_GROUP_HELIOS);
+
+
         $edges =  [];
         $topologiesHelios = [];
+        /**
+         * Format each PlatformTopology to fit the JSON Graph Schema specification, used by Helios
+         * https://github.com/jsongraph/json-graph-specification
+         */
         foreach ($platformCompleteTopology as $topology) {
             $topologyHelios = new PlatformTopologyHeliosFormat($topology);
             $topologiesHelios[] = $topologyHelios;
-            $edges[] = $topologyHelios->getRelation();
+            /**
+             * Only insert the edges that have a target (e.g. a Central could have no target, and wouldnt be inserted)
+             */
+            if ($topologyHelios->getRelation()['target'] !== null) {
+                $edges[] = $topologyHelios->getRelation();
+            }
         }
         return $this->view([
             'graph' => [
