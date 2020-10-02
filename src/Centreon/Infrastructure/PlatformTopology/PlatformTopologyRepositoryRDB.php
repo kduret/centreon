@@ -182,8 +182,6 @@ class PlatformTopologyRepositoryRDB extends AbstractRepositoryDRB implements Pla
         $platformCompleteTopology = [];
         foreach ($statement as $topology) {
             $platformTopology = EntityCreator::createEntityByArray(PlatformTopology::class, $topology);
-            $platformRelation = $this->findNodeRelationType($platformTopology->getServerId());
-            $platformTopology->setRelation($platformRelation);
             $platformCompleteTopology[] = $platformTopology;
         }
         if (!empty($platformCompleteTopology)) {
@@ -204,27 +202,23 @@ class PlatformTopologyRepositoryRDB extends AbstractRepositoryDRB implements Pla
         return null;
     }
 
-    private function findNodeRelationType(int $serverId): ?string
+    public function findPlatformOnePeerRetentionMode(int $serverId): ?string
     {
         $statement = $this->db->prepare("
-            SELECT *
+            SELECT config_value
             FROM cfg_centreonbroker_info cfgbi
-            WHERE cfgbi.config_id IN (
-                SELECT config_id
-                FROM cfg_centreonbroker AS cfgb
-                INNER JOIN nagios_server AS ns ON (cfgb.ns_nagios_server = ns.id)
+            INNER JOIN cfg_centreonbroker AS cfgb
+                ON cfgbi.config_id = cfgb.config_id
+            INNER JOIN nagios_server AS ns
+                ON cfgb.ns_nagios_server = ns.id
                 AND ns.id = :serverId
-            )
-            AND cfgbi.config_group IN ('output', 'input')
-            AND config_key IN ('one_peer_retention_mode', 'host', 'name', 'port', 'protocol')
-            ORDER BY config_id, config_group, config_group_id, config_key ASC
+            WHERE cfgbi.config_group = 'output'
+            AND config_key = 'one_peer_retention_mode'
         ");
         $statement->bindValue(':serverId', $serverId, \PDO::PARAM_INT);
         $statement->execute();
         while (($result = $statement->fetch(\PDO::FETCH_ASSOC)) !== false) {
-            if ($result['config_group'] === 'output' && $result['config_key'] === 'host') {
-                return empty($result['config_value']) ? 'peer_retention' : 'normal';
-            }
+            return $result['config_value'];
         }
         return null;
     }

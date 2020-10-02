@@ -18,6 +18,7 @@
  * For more information : contact@centreon.com
  *
  */
+
 declare(strict_types=1);
 
 namespace Centreon\Domain\PlatformTopology\Interfaces;
@@ -76,5 +77,19 @@ interface PlatformTopologyRepositoryInterface
      */
     public function getPlatformCompleteTopology(): ?array;
 
-    public function findPlatformAddressById(int $id): ?string;
+    /**
+     * Search for the address of a topology using its Id
+     *
+     * @param integer $serverId
+     * @return string|null
+     */
+    public function findPlatformAddressById(int $serverId): ?string;
+
+    /**
+     * Search for the peer retention mode of a platform
+     *
+     * @param integer $serverId
+     * @return string|null
+     */
+    public function findPlatformOnePeerRetentionMode(int $serverId): ?string;
 }

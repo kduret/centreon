@@ -146,11 +146,12 @@ class PlatformTopologyService implements PlatformTopologyServiceInterface
         if ($completePlatformTopology === null) {
             throw new EntityNotFoundException('Platform Topology not found');
         }
-
         foreach ($completePlatformTopology as $topology) {
+            /**
+             * Check if the parent are correctly set
+             */
             if ($topology->getType() !== PlatformTopology::TYPE_CENTRAL) {
-                $topologyParentId = $topology->getParentId();
-                if ($topologyParentId === null) {
+                if ($topology->getParentId() === null) {
                     throw new PlatformTopologyException(
                         sprintf(
                             _("the '%s': '%s'@'%s' isn't registered on any Central or Remote"),
@@ -160,13 +161,31 @@ class PlatformTopologyService implements PlatformTopologyServiceInterface
                         )
                     );
                 }
-                $topologyParentAddress = $this->platformTopologyRepository->findPlatformAddressById($topologyParentId);
+                $topologyParentAddress = $this->platformTopologyRepository->findPlatformAddressById(
+                    $topology->getParentId()
+                );
                 if ($topologyParentAddress === null) {
                     throw new PlatformTopologyException(
-                        sprintf(_("Topology address for platform ID: '%d' not found"), $topologyParentId)
+                        sprintf(_("Topology address for parent platform ID: '%d' not found"), $topology->getParentId())
                     );
                 }
                 $topology->setParentAddress($topologyParentAddress);
+            }
+            $onePeer = $this->platformTopologyRepository->findPlatformOnePeerRetentionMode($topology->getServerId());
+            if ($onePeer === null) {
+                throw new PlatformTopologyException(
+                    sprintf(
+                        _("The 'one peer retention mode' is missing in your '%s' '%s'@'%s' broker configuration"),
+                        $topology->getType(),
+                        $topology->getName(),
+                        $topology->getAddress()
+                    )
+                );
+            }
+            if ($onePeer === 'yes') {
+                $topology->setRelation(PlatformTopology::PEER_RETENTION_RELATION);
+            } else {
+                $topology->setRelation(PlatformTopology::NORMAL_RELATION);
             }
         }
         return $completePlatformTopology;

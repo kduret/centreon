@@ -18,6 +18,7 @@
  * For more information : contact@centreon.com
  *
  */
+
 declare(strict_types=1);
 
 namespace Centreon\Domain\PlatformTopology;
@@ -34,7 +35,7 @@ class PlatformTopology
     private const TYPE_MAP = 'map';
     private const TYPE_MBI = 'mbi';
     public const NORMAL_RELATION = 'normal';
-    public const ONE_PEER_RELATION = 'one_peer';
+    public const PEER_RETENTION_RELATION = 'peer_retention';
     /**
      * Available server types
      */
@@ -48,7 +49,7 @@ class PlatformTopology
 
     private const AVAILABLE_RELATIONS = [
         self::NORMAL_RELATION,
-        self::ONE_PEER_RELATION
+        self::PEER_RETENTION_RELATION
     ];
 
     /**
@@ -295,17 +296,19 @@ class PlatformTopology
         return $this->relation;
     }
 
-    public function setRelation(string $relationType): self
+    public function setRelation(?string $relationType): self
     {
-        if(!in_array($relationType, self::AVAILABLE_RELATIONS)) {
+        if (!in_array($relationType, self::AVAILABLE_RELATIONS)) {
             throw new \InvalidArgumentException(sprintf(_("The type of relation '%s' is not allowed"), $relationType));
         }
 
-        $this->relation = [
-            'source' => $this->getId(),
-            'relation' => $relationType,
-            'target' => $this->getParentId()
-        ];
+        if ($this->getParentId() !== null) {
+            $this->relation = [
+                'source' => $this->getId(),
+                'relation' => $relationType,
+                'target' => $this->getParentId()
+            ];
+        }
 
         return $this;
     }

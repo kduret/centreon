@@ -18,6 +18,7 @@
  * For more information : contact@centreon.com
  *
  */
+
 declare(strict_types=1);
 
 namespace Centreon\Application\PlatformTopology;
@@ -25,98 +26,35 @@ namespace Centreon\Application\PlatformTopology;
 use Centreon\Domain\PlatformTopology\PlatformTopology;
 
 /**
- * Class designed to retrieve servers to be added using the wizard
- *
+ * Format PlatformTopology to fit the JSON Graph Schema specification, used by Helios
+ * @link https://github.com/jsongraph/json-graph-specification
  */
 class PlatformTopologyHeliosFormat
 {
     /**
-     * @var string
+     * @var string Stringified PlatformTopologyId
      */
     private $id;
 
     /**
-     * @var string
+     * @var string PlatformTopology type
      */
     private $type;
 
     /**
-     * @var string
+     * @var string PlatformTopology Name
      */
     private $label;
 
     /**
-     * @var array|null
+     * @var array|null Custom properties of a Json Graph Object
      */
     private $metadata;
 
     /**
-     * @var array|null
+     * @var array|null relation details between a platform and its parent
      */
     private $relation;
-
-    public function getId(): ?string
-    {
-        return $this->id;
-    }
-
-    public function setId(?string $id): self
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(?string $type): self
-    {
-        $this->type = $type;
-        return $this;
-    }
-
-    public function getLabel(): ?string
-    {
-        return $this->label;
-    }
-
-    public function setLabel(?string $label): self
-    {
-        $this->label = $label;
-        return $this;
-    }
-
-    public function getMetadata(): ?array
-    {
-        return $this->metadata;
-    }
-
-    public function setMetadata(?array $metadata): self
-    {
-        $this->metadata = $metadata;
-        return $this;
-    }
-
-    public function getRelation(): ?array
-    {
-        return $this->relation;
-    }
-
-    public function setRelation(array $relation): self
-    {
-        $relationStringified = [];
-        foreach($relation as $name => $relationItem) {
-            if($relationItem !== null) {
-                $relationStringified[$name] = (string) $relationItem;
-            }else{
-                $relationStringified[$name] = null;
-            }
-        }
-        $this->relation = $relationStringified;
-        return $this;
-    }
 
     public function __construct(PlatformTopology $platformTopology)
     {
@@ -126,12 +64,110 @@ class PlatformTopologyHeliosFormat
         $this->setRelation($platformTopology->getRelation());
 
         $metadata = [];
-        if ($platformTopology->getServerId() !== null){
+        if ($platformTopology->getServerId() !== null) {
             $metadata['centreon-id'] = (string) $platformTopology->getServerId();
         }
-        if ($platformTopology->getHostname !== null){
+        if ($platformTopology->getHostname !== null) {
             $metadata['hostname'] = $platformTopology->getHostname();
         }
         $this->setMetadata($metadata);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param string|null $id
+     * @return self
+     */
+    public function setId(?string $id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string|null $type
+     * @return self
+     */
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLabel(): ?string
+    {
+        return $this->label;
+    }
+
+    /**
+     * @param string|null $label
+     * @return self
+     */
+    public function setLabel(?string $label): self
+    {
+        $this->label = $label;
+        return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getMetadata(): ?array
+    {
+        return $this->metadata;
+    }
+
+    /**
+     * @param array|null $metadata
+     * @return self
+     */
+    public function setMetadata(?array $metadata): self
+    {
+        $this->metadata = $metadata;
+        return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getRelation(): ?array
+    {
+        return $this->relation;
+    }
+
+    /**
+     * @param array|null $relation
+     * @return self
+     */
+    public function setRelation(?array $relation): self
+    {
+        $relationStringified = [];
+        foreach ($relation as $name => $relationItem) {
+            if ($relationItem !== null) {
+                $relationStringified[$name] = (string) $relationItem;
+            } else {
+                $relationStringified[$name] = null;
+            }
+        }
+        $this->relation = $relationStringified;
+        return $this;
     }
 }
