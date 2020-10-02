@@ -75,7 +75,7 @@ interface PlatformTopologyRepositoryInterface
      * @return PlatformTopology|null
      * @throws \Exception
      */
-    public function findPlatformTopologyNagiosId(string $serverName): ?PlatformTopology;
+    public function findMonitoringIdFromName(string $serverName, bool $isLocalhost): ?PlatformTopology;
 
     /**
      * Search for the global topology of the platform
@@ -99,5 +99,4 @@ interface PlatformTopologyRepositoryInterface
      * @return string|null
      */
     public function findPlatformOnePeerRetentionMode(int $serverId): ?string;
-    public function findMonitoringIdFromName(string $serverName, bool $isLocalhost): ?PlatformTopology;
 }

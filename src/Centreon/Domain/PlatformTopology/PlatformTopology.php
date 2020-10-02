@@ -97,6 +97,8 @@ class PlatformTopology
      * @var array|null Communication type between topology and parent
      */
     private $relation;
+
+    /**
      * @var bool
      */
     private $isLinkedToAnotherServer = false;
