@@ -5298,26 +5298,38 @@ msgstr "Afficher les commentaires sur le graphique"
 msgid "Are you sure you want to change this parameter? Please read the help before."
 msgstr "Êtes-vous sûr de vouloir changer ce paramètre ? Veuillez lire l'aide avant."
 
-msgid "Keycloak trusted client addresses"
-msgstr "Adresses des clients de confiance SSO Keycloak"
+msgid "Trusted client addresses"
+msgstr "Adresses des clients de confiance"
 
-msgid "Keycloak blacklist client addresses"
-msgstr "Adresses des clients de bloqués Keycloak"
+msgid "Blacklist client addresses"
+msgstr "Adresses des clients bloqués"
 
-msgid "Keycloak Server Url"
-msgstr "URL du serveur Keycloak"
+msgid "Base Url"
+msgstr "URL de base"
 
-msgid "Keycloak Redirect Url"
-msgstr "Adresse de redirection vers Centreon depuis Keycloak"
+msgid "Authorization Endpoint"
+msgstr "Point de terminaison d'autorisation"
 
-msgid "Keycloak Client Realm"
-msgstr "Royaume client Keycloak"
+msgid "Token Endpoint"
+msgstr "Point de terminaison de jeton"
 
-msgid "Keycloak Client ID"
-msgstr "Identifiant client Keycloak"
+msgid "Introspection Token Endpoint"
+msgstr "Point de terminaison d'introspection du jeton"
 
-msgid "Keycloak Client Secret"
-msgstr "Secret client Keycloak"
+msgid "User Information Endpoint"
+msgstr "Point de terminaison des informations utilisateur"
+
+msgid "Scope"
+msgstr "Portée"
+
+msgid "Redirect Url"
+msgstr "Adresse de redirection vers Centreon"
+
+msgid "Client ID"
+msgstr "Identifiant client"
+
+msgid "Client Secret"
+msgstr "Secret client"
 
 #: centreon-web/www/include/Administration/parameters/general/form.php:189
 msgid "Enable SSO authentication"
@@ -15533,11 +15545,11 @@ msgid "The name of the platform is not consistent"
 msgstr "Le nom de cette plateforme n'est pas cohérent"
 
 #: api/topology/register
-msgid "The address '%s' for '%s' is not valid"
-msgstr "L'adresse '%s' de '%s' n'est pas valide"
+msgid "The address '%s' of '%s' is not valid or not resolvable"
+msgstr "L'adresse '%s' de la plateforme '%s' n'est pas valide ou ne peut être résolue"
 
 #: api/topology/register
-msgid "The type of platform '%s'@'%s' is not consistent"
+msgid "The platform type of '%s'@'%s' is not consistent"
 msgstr "Le type de la plateforme '%s'@'%s' n'est pas cohérent"
 
 #: api/topology/register
@@ -15553,6 +15565,10 @@ msgid "No parent platform was found for : '%s'@'%s'"
 msgstr "Aucune plateforme parente n'a été trouvée pour : '%s'@'%s'"
 
 #: api/topology/register
+msgid "Cannot register the '%s' platform : '%s'@'%s' behind a '%s' platform"
+msgstr "Impossible d'enregistrer la plateforme '%s' : '%s'@'%s' derrière un '%s'"
+
+#: api/topology/register
 msgid "Error when adding in topology the platform : '%s'@'%s'"
 msgstr "Erreur lors de l'ajout dans la topologie de la plateforme : '%s'@'%s'"
 
@@ -15565,16 +15581,108 @@ msgid "Cannot set parent id to a central server"
 msgstr "Il n'est pas possible d'assigner un id parent à un serveur central"
 
 #: api/topology/register
-msgid "The Central : '%s'@'%s' is already registered"
-msgstr "Un Central : '%s'@'%s' est déjà enregistré"
+msgid "A '%s': '%s'@'%s' is already registered"
+msgstr "Un '%s': '%s'@'%s' est déjà enregistré"
 
 #: api/topology/register
-msgid "The Central type server : '%s'@'%s' does not match the one configured in Centreon"
-msgstr "Le server du type Central : '%s'@'%s' ne correspond pas à celui configuré dans Centreon"
+msgid "The server type '%s' : '%s'@'%s' does not match the one configured in Centreon or is disabled"
+msgstr "Le serveur du type '%s' : '%s'@'%s' ne correspond pas à celui configuré dans Centreon ou est désactivé"
 
 #: api/topology/register
 msgid "Missing mandatory parent address, to link the platform : '%s'@'%s'"
 msgstr "Adresse du server parent manquante, pour pouvoir lier la plateforme : '%s'@'%s'"
+
+#: api/topology/register
+msgid "Same address and parent_address for platform : '%s'@'%s'."
+msgstr "Les adresses de la plateforme : '%s'@'%s' et de son parent sont les mêmes"
+
+#: api/topology/register
+msgid "Central platform's API port are not consistent. Please check the 'Remote Access' form."
+msgstr "Le port de l'API vers le Central n'est pas cohérent. Veuiller vérifier le formulaire 'Accès du Remote'."
+
+#: api/topology/register
+msgid "Platform : '%s'@'%s' mandatory data are missing. Please check the Remote Access form."
+msgstr "Données indispensables manquantes pour la plateforme : '%s'@'%s'. Veuillez vérifier le formulaire 'Accès du Remote'."
+
+#: api/topology/register
+msgid "Central platform's data are not consistent. Please check the 'Remote Access' form"
+msgstr "Des données de la plateforme ne sont pas cohérentes. Veuillez vérifier le formulaire 'Accès du Remote'."
+
+#: api/topology/register
+msgid "Unable to retrieve platform information's data."
+msgstr "Impossible de récupérer les données d'information sur la plateforme."
+
+#: api/topology/register
+msgid "The platform: '%s'@'%s' is not declared as a 'remote'."
+msgstr "La plateforme: '%s'@'%s' n'est pas déclarée comme un 'remote'."
+
+#: api/topology/register
+msgid "The platform: '%s'@'%s' is not linked to a Central. Please use the wizard first."
+msgstr "La plateforme: '%s'@'%s n'est pas liée à un Central. Veuillez d'abord utiliser l'assistant."
+
+#: api/topology/register
+msgid "Central's protocol port is missing on: '%s'@'%s'. Please check the Remote Access form."
+msgstr "Le port du Central, de la plateforme: '%s'@'%s est manquant. Veuillez vérifier le formulaire 'Accès du Remote'."
+
+#: api/topology/register
+msgid "Central's protocol scheme is missing on: '%s'@'%s'. Please check the Remote Access form."
+msgstr "Le schéma du Central, de la plateforme: '%s'@'%s est manquant. Veuillez vérifier le formulaire 'Accès du Remote'."
+
+#: api/topology/register
+msgid "Central's path is missing on: '%s'@'%s'. Please check the Remote Access form."
+msgstr "Le chemin vers le Central, de la plateforme: '%s'@'%s est manquant. Veuillez vérifier le formulaire 'Accès du Remote'."
+
+#: api/topology/register
+msgid "Central's credentials are missing on: '%s'@'%s'. Please check the Remote Access form."
+msgstr "Les identifiants du Central sont manquants pour: '%s'@'%s'. Veuillez vérifier le formulaire 'Accès du Remote'."
+
+#: api/topology/register
+msgid "Unable to decipher central's credentials. Please check the credentials in the 'Remote Access' form"
+msgstr "Impossible de déchiffrer les identifiants du Central. Veuillez vérifier le formulaire 'Accès du Remote'"
+
+#: api/topology/register
+msgid "Failed to get the auth token. Cannot register the platform : '%s'@'%s' on the Central"
+msgstr "Echec d'obtention du token d'auth. Impossible d'enregistrer sur le Central: '%s'@'%s'"
+
+#: api/topology/register
+msgid "Request to the Central's API failed"
+msgstr "Echec de la requète vers l'API du Central"
+
+#: api/topology/register
+msgid "API calling the Central returned a Client exception"
+msgstr "L'API du Central a renvoyé une exception Client"
+
+#: api/topology/register
+msgid "API calling the Central returned a Redirection exception"
+msgstr "L'API du Central a renvoyé une exception de Redirection"
+
+#: api/topology/register
+msgid "API calling the Central returned a Server exception"
+msgstr "L'API du Central a renvoyé une exception Server"
+
+#: api/topology/register
+msgid "Please check the 'Centreon UI' form and your proxy configuration"
+msgstr "Veuillez vérifier le formulaire 'Centreon Web' et les paramètres de votre proxy"
+
+#: api/topology/register
+msgid "Unable to convert Central's API response"
+msgstr "Impossible de convertir la réponse de L'API provenant du Central"
+
+#: api/topology/register
+msgid "Error from Central's register API : "
+msgstr "Erreur de l'API d'enregistrement sur le Central : "
+
+#: api/topology/register
+msgid "The platform: '%s'@'%s' cannot be added to the Central linked to this Remote"
+msgstr "La plateforme: '%s'@'%s' ne peut pas être ajoutée au Central lié à ce Remote"
+
+#: api/topology/register
+msgid "Central's response => Code : "
+msgstr "Réponse du Central => Code : "
+
+#: api/topology/register
+msgid "Unable to find the encryption key. Please check the '.env.local.php' file."
+msgstr "Impossible de trouver la clef de déchiffrement. Veuillez vérifer le fichier '.env.local.php'."
 
 msgid "You are not authorized to access this resource"
 msgstr "Vous n'êtes pas autorisé à accéder à cette ressource"
@@ -15657,6 +15765,15 @@ msgstr "Le mot de passe ne peut pas être déchiffré. Merci de vérifier ce cha
 msgid "Central's API credentials"
 msgstr "Identifiants de l'API du Central"
 
+msgid "Build full URI (SCHEME://IP:PORT/PATH)."
+msgstr "construction de l'URI complete (SCHEME://IP:PORT/PATH)."
+
+msgid "Central's API URI."
+msgstr "URI de l'API du central"
+
+msgid "Allow self signed certificate."
+msgstr "Autoriser le certificat auto-signé."
+
 #: www/include/Adrministration/parameters/remote/formRemote.php
 msgid "Remote access"
 msgstr "Accès du Remote"
@@ -15690,3 +15807,18 @@ msgstr "Pas de ressource trouvée"
 
 msgid "Error when searching for the Engine configuration (%s)"
 msgstr "Erreur lors de la recherche de la configuration du moteur (%s)"
+
+msgid "Host id cannot be null"
+msgstr "L'id de l'hôte ne peut être nul"
+
+msgid "Host name cannot be null"
+msgstr "Le nom de l'hôte ne peut être nul"
+
+msgid "Action log id cannot be null"
+msgstr "L'id du journal des actions ne peut être nul"
+
+msgid "Error when adding details for the action log %d"
+msgstr "Erreur lors de l'ajout de détails pour le journal des actions %d"
+
+msgid "Error when adding an entry in the action log"
+msgstr "Erreur lors de l'ajout d'une entrée dans le journal des actions"

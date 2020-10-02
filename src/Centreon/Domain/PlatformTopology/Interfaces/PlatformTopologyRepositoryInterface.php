@@ -23,7 +23,10 @@ declare(strict_types=1);
 
 namespace Centreon\Domain\PlatformTopology\Interfaces;
 
+use Centreon\Domain\PlatformInformation\PlatformInformation;
 use Centreon\Domain\PlatformTopology\PlatformTopology;
+use Centreon\Domain\PlatformTopology\PlatformTopologyException;
+use Centreon\Domain\Proxy\Proxy;
 
 interface PlatformTopologyRepositoryInterface
 {
@@ -47,26 +50,30 @@ interface PlatformTopologyRepositoryInterface
     ): bool;
 
     /**
-     * Search for platform ID using its address
+     * Search for platform's ID using its address
      *
      * @param string $serverAddress
      * @return PlatformTopology|null
+     * @throws \Exception
      */
     public function findPlatformTopologyByAddress(string $serverAddress): ?PlatformTopology;
 
     /**
-     * Search for platform name and address using its type
+     * Search for platform's name and address using its type
      *
      * @param string $serverType
      * @return PlatformTopology|null
+     * * @throws \Exception
      */
     public function findPlatformTopologyByType(string $serverType): ?PlatformTopology;
 
     /**
-     * Search for platform nagiosID using its name
+     * Search for platform's monitoring Id using its name
      *
      * @param string $serverName
+     * @param bool $isLocalhost
      * @return PlatformTopology|null
+     * @throws \Exception
      */
     public function findPlatformTopologyNagiosId(string $serverName): ?PlatformTopology;
 
@@ -92,4 +99,5 @@ interface PlatformTopologyRepositoryInterface
      * @return string|null
      */
     public function findPlatformOnePeerRetentionMode(int $serverId): ?string;
+    public function findMonitoringIdFromName(string $serverName, bool $isLocalhost): ?PlatformTopology;
 }
