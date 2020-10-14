@@ -331,7 +331,12 @@ function setConfigOptionsFromTemplate(array $options, string $helpMessage): arra
     $configOptions['ROOT_CENTREON_FOLDER'] = $options['ROOT_CENTREON_FOLDER'] ?? 'centreon';
     $configOptions['HOST_ADDRESS'] = $options['HOST_ADDRESS'];
     $configOptions['SERVER_NAME'] = $options['SERVER_NAME'];
-    $configOptions['PROXY_USAGE'] = filter_var($options['PROXY_USAGE'], FILTER_VALIDATE_BOOLEAN) ?? false;
+    if(isset($options['PROXY_USAGE'])) {
+        $configOptions['PROXY_USAGE'] = filter_var($options['PROXY_USAGE'], FILTER_VALIDATE_BOOLEAN);
+    }else {
+        $configOptions['PROXY_USAGE'] = false;
+    }
+
     if (isset($options['FQDN'])) {
         $configOptions['FQDN'] = filter_var($options['FQDN'], FILTER_VALIDATE_DOMAIN);
         if (!$configOptions['FQDN']) {

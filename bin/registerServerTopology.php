@@ -149,6 +149,8 @@ if (isset($opt['template'])) {
         if (!empty($configOptions["PROXY_USERNAME"])) {
             $configOptions['PROXY_PASSWORD'] = askQuestion('please enter the proxy password: ', true);
         }
+    }else {
+        $configOptions['PROXY_USAGE'] = false;
     }
 }
 
@@ -176,7 +178,27 @@ $loginCredentials = [
 /**
  * Prepare Server Register payload
  */
-$serverIp = trim(shell_exec("hostname -I | awk ' {print $1}'"));
+$foundIps = explode(" ", trim(shell_exec("hostname -I")));
+$foundIps = array_combine(range(1, count($foundIps)), array_values($foundIps));
+
+$goodIp = false;
+while(!$goodIp) {
+    $ipSelection = 'Found IP on CURRENT NODE:'. PHP_EOL;
+    foreach($foundIps as $key => $ip) {
+            $ipSelection .= "   [$key]: $ip" . PHP_EOL;
+    }
+
+    echo $ipSelection;
+    $ipChoice = askQuestion('Which IP do you want to use as CURRENT NODE IP ?');
+
+    if($ipChoice < 1 || $ipChoice > count($foundIps)){
+        echo 'Bad IP Choice' . PHP_EOL;
+    }else {
+        $goodIp = true;
+    }
+}
+$serverIp = $foundIps[$ipChoice];
+
 $payload = [
     "name" => $configOptions['SERVER_NAME'],
     "hostname" => gethostname(),
@@ -304,7 +326,6 @@ if (!empty($port)) {
     $loginUrl .= ':' . $port;
 }
 $loginUrl .= '/' . $configOptions['ROOT_CENTREON_FOLDER'] . '/api/latest/login';
-
 try {
     $ch = curl_init($loginUrl);
     curl_setopt($ch, CURLOPT_POST, 1);
@@ -316,7 +337,7 @@ try {
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     }
 
-    if (isset($configOptions['PROXY_USAGE']) && $configOptions['PROXY_USAGE'] === true) {
+    if ($configOptions['PROXY_USAGE'] === true) {
         curl_setopt($ch, CURLOPT_PROXY, $configOptions["PROXY_HOST"]);
         curl_setopt($ch, CURLOPT_PROXYPORT, $configOptions["PROXY_PORT"]);
         if (!empty($configOptions["PROXY_USERNAME"])) {
@@ -326,6 +347,8 @@ try {
                 $configOptions["PROXY_USERNAME"] . ':' . $configOptions['PROXY_PASSWORD']
             );
         }
+    } else {
+        curl_setopt($ch, CURLOPT_PROXY, '');
     }
 
     $result = curl_exec($ch);
@@ -374,7 +397,7 @@ foreach ($registerPayloads as $postData) {
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         }
 
-        if (isset($configOptions['PROXY_USAGE']) && $configOptions['PROXY_USAGE'] === true) {
+        if ($configOptions['PROXY_USAGE'] === true) {
             curl_setopt($ch, CURLOPT_PROXY, $configOptions["PROXY_HOST"]);
             curl_setopt($ch, CURLOPT_PROXYPORT, $configOptions["PROXY_PORT"]);
             if (!empty($configOptions["PROXY_USERNAME"])) {
@@ -384,6 +407,8 @@ foreach ($registerPayloads as $postData) {
                     $configOptions["PROXY_USERNAME"] . ':' . $configOptions['PROXY_PASSWORD']
                 );
             }
+        } else {
+            curl_setopt($ch, CURLOPT_PROXY, '');
         }
 
         $result = curl_exec($ch);
