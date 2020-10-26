@@ -14,10 +14,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x]
-
     steps:
     - uses: actions/checkout@v2
     - name: Cache node modules
@@ -32,11 +28,13 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
-    - name: Use Node.js
-      uses: actions/setup-node@v1
     - run: npm ci
     #- run: npm run build --if-present
     - run: npm run eslint -- -o checkstyle-fe.xml -f checkstyle
+    - uses: actions/upload-artifact@v2
+      with:
+        name: checkstyle-artifact
+        path: checkstyle-fe.xml
     - name: Publish Test Report
       uses: mikepenz/action-junit-report@v1
       if: ${{ always() }}
