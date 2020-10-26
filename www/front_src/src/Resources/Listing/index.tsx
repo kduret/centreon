@@ -8,7 +8,7 @@ import { useTheme, fade } from '@material-ui/core';
 import { Listing } from '@centreon/ui';
 
 import { graphTabId } from '../Details/tabs';
-import { rowColorConditions } from '../colors';
+import { rowColorConditions } from '../colors'
 import {
   labelRowsPerPage,
   labelOf,
@@ -43,8 +43,7 @@ const ResourceListing = (): JSX.Element => {
     selectedResources,
     setResourcesToAcknowledge,
     setResourcesToSetDowntime,
-    setResourcesToCheck,
-    sending,
+    setResourcesToCheck,sending,
   } = useResourceContext();
 
   const { initAutorefreshAndLoad } = useLoadResources();
