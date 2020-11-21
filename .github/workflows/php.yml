@@ -40,7 +40,6 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: kduret/custom-github-action
-        ref: v1-beta
         token: ${{ secrets.GITHUB_TOKEN }} # stored in GitHub secrets
     - name: Run My Action
       uses: ./
