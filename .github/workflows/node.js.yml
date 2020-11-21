@@ -22,12 +22,10 @@ jobs:
         cache-name: cache-node-modules
       with:
         # npm cache files are stored in `~/.npm` on Linux/macOS
-        path: ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        path: node_modules
+        key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
+          ${{ runner.os }}-npm-
     - run: npm ci
     - run: npm run eslint -- -o checkstyle-fe.xml -f junit
     - uses: actions/upload-artifact@v2
