@@ -39,6 +39,7 @@ jobs:
       uses: mikepenz/action-junit-report@v1
       if: ${{ always() }}
       with:
+        check_name: 'Coding style Report'
         report_paths: 'checkstyle-fe.xml'
         github_token: ${{ secrets.GITHUB_TOKEN }}
     - run: npm t -- --ci --reporters=jest-junit --runInBand
@@ -51,5 +52,6 @@ jobs:
       uses: mikepenz/action-junit-report@v1
       if: ${{ always() }}
       with:
+        check_name: 'Unit test Report'
         report_paths: 'junit.xml'
         github_token: ${{ secrets.GITHUB_TOKEN }}
