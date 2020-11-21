@@ -17,6 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Cache node modules
+      id: npm-cache
       uses: actions/cache@v2
       env:
         cache-name: cache-node-modules
@@ -27,6 +28,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-npm-
     - run: npm ci
+      if: steps.npm-cache.outputs.cache-hit != 'true'
     - run: npm run eslint -- -o checkstyle-fe.xml -f junit
     - uses: actions/upload-artifact@v2
       if: ${{ always() }}
