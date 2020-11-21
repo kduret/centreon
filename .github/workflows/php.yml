@@ -41,7 +41,6 @@ jobs:
       with:
         repository: kduret/custom-github-action
         ref: v1-beta
-        token: ${{ secrets.GIT_HUB_TOKEN }} # stored in GitHub secrets
     - name: Run My Action
       uses: ./
       with:
