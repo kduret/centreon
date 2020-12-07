@@ -47,7 +47,7 @@ jobs:
         # Enable linters
         php_codesniffer: true
         # Optional: Ignore warnings
-        php_codesniffer_args: "--standard=./ruleset.xml ./"
+        php_codesniffer_args: "--standard=./ruleset.xml ./src"
 
     - name: Run test suite
       run: ./vendor/bin/phing unittest
