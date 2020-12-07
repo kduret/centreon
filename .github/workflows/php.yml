@@ -34,9 +34,18 @@ jobs:
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
     - name: Check php coding style
-      run: ./vendor/bin/phing codestyle
+      run: composer run codestyle:ci
     - run: ./vendor/bin/cs2pr ./build/checkstyle-be.xml
       if: always()
+
+    - name: Run linters
+      uses: wearerequired/lint-action@v1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        # Enable linters
+        php_codesniffer: true
+        # Optional: Ignore warnings
+        php_codesniffer_args: "--standard=./ruleset.xml ./"
 
     - name: Run test suite
       run: ./vendor/bin/phing unittest
