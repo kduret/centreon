@@ -36,7 +36,7 @@ jobs:
     - name: Check php coding style
       run: |
         ./vendor/bin/phing codestyle
-        cs2pr ./build/checkstyle-be.xml
+        ./vendor/bin/cs2pr ./build/checkstyle-be.xml
 
     - name: Run test suite
       run: ./vendor/bin/phing unittest
