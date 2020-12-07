@@ -44,6 +44,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         # Enable linters
         php_codesniffer: true
+        php_codesniffer_command_prefix: "./vendor/bin/"
         # Optional: Ignore warnings
         php_codesniffer_args: "--standard=./ruleset.xml ./"
 
