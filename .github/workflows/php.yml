@@ -33,6 +33,11 @@ jobs:
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
+    - name: Check php coding style
+      run: |
+        ./vendor/bin/phing codestyle
+        cs2pr ./build/checkstyle-be.xml
+
     - name: Run test suite
       run: ./vendor/bin/phing unittest
 

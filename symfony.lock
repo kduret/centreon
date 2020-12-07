@@ -375,6 +375,9 @@
             "./phpcs.xml.dist"
         ]
     },
+    "staabm/annotate-pull-request-from-checkstyle": {
+        "version": "1.4.0"
+    },
     "symfony/browser-kit": {
         "version": "v4.4.9"
     },
@@ -408,6 +411,9 @@
     },
     "symfony/dependency-injection": {
         "version": "v4.4.9"
+    },
+    "symfony/deprecation-contracts": {
+        "version": "v2.2.0"
     },
     "symfony/dom-crawler": {
         "version": "v4.4.9"

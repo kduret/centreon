@@ -31,7 +31,8 @@
         "symfony/var-dumper": "4.4.*",
         "symfony/profiler-pack": "^1.0",
         "phpstan/phpstan": "^0.12.38",
-        "webmozart/assert": "^1.8"
+        "webmozart/assert": "^1.8",
+        "staabm/annotate-pull-request-from-checkstyle": "^1.4"
     },
     "require": {
         "php": ">=7.1.3",
