@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright 2005 - 2020 Centreon (https://www.centreon.com/)
  *
@@ -30,7 +31,7 @@ use FOS\RestBundle\Controller\AbstractFOSRestController;
  */
 abstract class AbstractController extends AbstractFOSRestController
 {
-    public const ROLE_API_REALTIME =   'ROLE_API_REALTIME' ;
+    public const ROLE_API_REALTIME = 'ROLE_API_REALTIME';
     public const ROLE_API_REALTIME_EXCEPTION_MESSAGE = 'You are not authorized to access this resource';
     public const ROLE_API_CONFIGURATION = 'ROLE_API_CONFIGURATION';
     public const ROLE_API_CONFIGURATION_EXCEPTION_MESSAGE = 'You are not authorized to access this resource';
