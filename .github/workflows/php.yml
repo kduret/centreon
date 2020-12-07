@@ -34,9 +34,9 @@ jobs:
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
     - name: Check php coding style
-      run: |
-        ./vendor/bin/phing codestyle
-        ./vendor/bin/cs2pr ./build/checkstyle-be.xml
+      run: ./vendor/bin/phing codestyle
+    - run: ./vendor/bin/cs2pr ./build/checkstyle-be.xml
+      if: always()
 
     - name: Run test suite
       run: ./vendor/bin/phing unittest
