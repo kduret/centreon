@@ -38,13 +38,14 @@ jobs:
     #- run: ./vendor/bin/cs2pr ./build/checkstyle-be.xml
     #  if: always()
 
+    - run: echo "${PWD}/vendor/bin" >> $GITHUB_PATH
+
     - name: Run linters
       uses: wearerequired/lint-action@v1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         # Enable linters
         php_codesniffer: true
-        php_codesniffer_command_prefix: "./vendor/bin/"
         # Optional: Ignore warnings
         php_codesniffer_args: "--standard=./ruleset.xml ./"
 
