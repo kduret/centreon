@@ -75,5 +75,5 @@ jobs:
 
     - name: Annotate pr
       run: |
-        php -v
+        cat checkstyle-be.xml
         ./my-action/cs2pr.php checkstyle-be.xml
