@@ -116,6 +116,6 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "codestyle": "phpcs --standard=./ruleset.xml --filter=GitModified ./",
-        "codestyle:ci": "@codestyle --report=checkstyle --report-file=./build/checkstyle-be.xml"
+        "codestyle:ci": "@codestyle --report=checkstyle --report-file=./checkstyle-be.xml"
     }
 }
