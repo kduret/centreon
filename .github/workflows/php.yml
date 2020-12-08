@@ -39,6 +39,9 @@ jobs:
       uses: jitterbit/get-changed-files@v1
     - run: |
         ./vendor/bin/phpcs --standard=./ruleset.xml --report=checkstyle --report-file=./checkstyle-be.xml ${{ steps.files.outputs.added }} ${{ steps.files.outputs.modified }}
+    - run: |
+        ./vendor/bin/phpstan analyse -c phpstan.neon --level 8 --no-interaction --no-progress --error-format=checkstyle ${{ steps.files.outputs.added }} ${{ steps.files.outputs.modified }} > phpstan.xml
+      if: always()
     #- name: Check php coding style
     #  run: |
     #    FILES=$(git diff --name-only HEAD origin/master);
@@ -85,5 +88,5 @@ jobs:
     - name: Annotate pr
       if: always()
       run: |
-        cat checkstyle-be.xml
         ./my-action/cs2pr.php checkstyle-be.xml
+        ./my-action/cs2pr.php phpstan.xml
