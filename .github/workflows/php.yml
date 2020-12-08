@@ -74,4 +74,6 @@ jobs:
         who-to-greet: 'Kev'
 
     - name: Annotate pr
-      run: ./my-action/cs2pr.php checkstyle-be.xml
+      run: |
+        php -v
+        ./my-action/cs2pr.php checkstyle-be.xml
