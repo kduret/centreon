@@ -35,10 +35,14 @@ jobs:
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
-    - name: Check php coding style
-      run: |
-        FILES=$(git diff --name-only HEAD origin/master);
-        if [ ! -z "$FILES" ]; then phpcs $FILES; fi
+    - id: files
+      uses: jitterbit/get-changed-files@v1
+    - run: |
+        ./vendor/bin/phpcs --standard=./ruleset.xml --report=checkstyle --report-file=./checkstyle-be.xml ${{ steps.files.outputs.all }}
+    #- name: Check php coding style
+    #  run: |
+    #    FILES=$(git diff --name-only HEAD origin/master);
+    #    if [ ! -z "$FILES" ]; then phpcs $FILES; fi
     #  run: composer run codestyle:ci
     #- run: ./vendor/bin/cs2pr ./build/checkstyle-be.xml
     #  if: always()
