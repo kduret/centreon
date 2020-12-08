@@ -65,9 +65,10 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: kduret/custom-github-action
+        path: my-action
         ref: master
         token: ${{ secrets.custom_github_action }} # stored in GitHub secrets
     - name: Run My Action
-      uses: ./
+      uses: ./my-action
       with:
         who-to-greet: 'Kev'
