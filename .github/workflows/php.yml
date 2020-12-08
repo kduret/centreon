@@ -37,7 +37,7 @@ jobs:
 
     - name: Check php coding style
       run: |
-        FILES=$(git diff --name-only HEAD master);
+        FILES=$(git diff --name-only HEAD origin/master);
         if [ ! -z "$FILES" ]; then phpcs $FILES; fi
     #  run: composer run codestyle:ci
     #- run: ./vendor/bin/cs2pr ./build/checkstyle-be.xml
