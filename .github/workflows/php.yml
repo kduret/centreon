@@ -38,7 +38,7 @@ jobs:
     - id: files
       uses: jitterbit/get-changed-files@v1
     - run: |
-        ./vendor/bin/phpcs --standard=./ruleset.xml --report=checkstyle --report-file=./checkstyle-be.xml ${{ steps.files.outputs.all }}
+        ./vendor/bin/phpcs --standard=./ruleset.xml --report=checkstyle --report-file=./checkstyle-be.xml ${{ steps.files.outputs.added }} ${{ steps.files.outputs.modified }}
     #- name: Check php coding style
     #  run: |
     #    FILES=$(git diff --name-only HEAD origin/master);
