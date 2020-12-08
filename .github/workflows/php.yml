@@ -63,6 +63,7 @@ jobs:
 
     - name: Checkout Private GitHub Action Repo
       uses: actions/checkout@v2
+      if: always()
       with:
         repository: kduret/custom-github-action
         path: my-action
@@ -70,10 +71,12 @@ jobs:
         token: ${{ secrets.custom_github_action }} # stored in GitHub secrets
     - name: Run My Action
       uses: ./my-action
+      if: always()
       with:
         who-to-greet: 'Kev'
 
     - name: Annotate pr
+      if: always()
       run: |
         cat checkstyle-be.xml
         ./my-action/cs2pr.php checkstyle-be.xml
