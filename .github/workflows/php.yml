@@ -100,12 +100,12 @@ jobs:
 
     - name: Annotate PR from PHPCS result
       run: |
-        ./my-action/cs2pr.php --prefix=PHPCS: checkstyle-be.xml
+        ./my-action/cs2pr.php --prefix=PHPCS checkstyle-be.xml
 
     - name: Annotate PR from PHPSTAN result
       if: always()
       run: |
-        ./my-action/cs2pr.php --prefix=PHPSTAN: phpstan.xml
+        ./my-action/cs2pr.php --prefix=PHPSTAN phpstan.xml
 
   unit-tests:
     runs-on: ubuntu-latest
