@@ -37,6 +37,8 @@ jobs:
   style:
     runs-on: ubuntu-latest
 
+    needs: build
+
     steps:
     - name: Load composer dependencies
       uses: actions/cache@v2
