@@ -39,9 +39,10 @@ jobs:
       uses: jitterbit/get-changed-files@v1
     - run: |
         ./vendor/bin/phpcs --standard=./ruleset.xml --report=checkstyle --report-file=./checkstyle-be.xml ${{ steps.files.outputs.added }} ${{ steps.files.outputs.modified }}
+      continue-on-error: true
     - run: |
         ./vendor/bin/phpstan analyse -c phpstan.neon --level 8 --no-interaction --no-progress --error-format=checkstyle ${{ steps.files.outputs.added }} ${{ steps.files.outputs.modified }} > phpstan.xml
-      if: always()
+      continue-on-error: true
     #- name: Check php coding style
     #  run: |
     #    FILES=$(git diff --name-only HEAD origin/master);
@@ -73,7 +74,6 @@ jobs:
 
     - name: Checkout Private GitHub Action Repo
       uses: actions/checkout@v2
-      if: always()
       with:
         repository: kduret/custom-github-action
         path: my-action
@@ -81,16 +81,13 @@ jobs:
         token: ${{ secrets.custom_github_action }} # stored in GitHub secrets
     - name: Run My Action
       uses: ./my-action
-      if: always()
       with:
         who-to-greet: 'Kev'
 
-    - name: Annotate pr
-      if: always()
+    - name: Annotate pr from PHPCS
       run: |
         ./my-action/cs2pr.php --prefix=PHPCS: checkstyle-be.xml
 
-    - name: Annotate pr
-      if: always()
+    - name: Annotate pr from PHPSTAN
       run: |
         ./my-action/cs2pr.php --prefix=PHPSTAN: phpstan.xml
