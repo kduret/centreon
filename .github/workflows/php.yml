@@ -40,6 +40,7 @@ jobs:
     needs: build
 
     steps:
+    - uses: actions/checkout@v2
     - name: Load composer dependencies
       uses: actions/cache@v2
       with:
@@ -112,6 +113,7 @@ jobs:
     needs: build
 
     steps:
+    - uses: actions/checkout@v2
     - name: Load composer dependencies
       uses: actions/cache@v2
       with:
