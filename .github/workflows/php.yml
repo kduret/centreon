@@ -35,6 +35,10 @@ jobs:
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
+  style:
+
+    runs-on: ubuntu-latest
+    steps:
     - id: files
       uses: jitterbit/get-changed-files@v1
     - run: |
