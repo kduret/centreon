@@ -89,5 +89,6 @@ jobs:
         ./my-action/cs2pr.php --prefix=PHPCS: checkstyle-be.xml
 
     - name: Annotate pr from PHPSTAN
+      if: always()
       run: |
         ./my-action/cs2pr.php --prefix=PHPSTAN: phpstan.xml
