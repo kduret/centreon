@@ -116,7 +116,7 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "test": "phpunit",
-        "test:ci": "@test --log-junit ./phpunit.xml --coverage-clover ./build/coverage.xml --no-interaction --do-not-cache-result",
+        "test:ci": "@test --log-junit ./phpunit.xml --coverage-clover ./coverage.xml",
         "codestyle": "phpcs --standard=./ruleset.xml ./",
         "codestyle:ci": "@codestyle --report=checkstyle --report-file=./checkstyle-be.xml"
     }
