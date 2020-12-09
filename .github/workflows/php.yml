@@ -88,9 +88,9 @@ jobs:
     - name: Annotate pr
       if: always()
       run: |
-        ./my-action/cs2pr.php --prefix=phpcs checkstyle-be.xml
+        ./my-action/cs2pr.php --prefix=PHPCS: checkstyle-be.xml
 
     - name: Annotate pr
       if: always()
       run: |
-        ./my-action/cs2pr.php --prefix=phpstan phpstan.xml
+        ./my-action/cs2pr.php --prefix=PHPSTAN: phpstan.xml
