@@ -8,7 +8,7 @@
 
 import React, { Component, ReactNode } from 'react';
 
-import { hot } from 'react-hot-loader/root'
+import { hot } from 'react-hot-loader/root';
 import { connect } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import Fullscreen from 'react-fullscreen-crossbrowser';

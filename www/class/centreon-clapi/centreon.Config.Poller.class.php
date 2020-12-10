@@ -44,7 +44,8 @@ require_once _CENTREON_PATH_ . 'www/class/config-generate/generate.class.php';
  * @author Julien Mathis
  *
  */
-class CentreonConfigPoller{
+class CentreonConfigPoller
+{
     private $_DB;
     private $_DBC;
     private $dependencyInjector;
