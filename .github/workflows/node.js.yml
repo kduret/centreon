@@ -75,4 +75,20 @@ jobs:
       run: |
         ./my-action/cs2pr.php --prefix=ESLINT checkstyle-fe.xml
 
+
+  fe-unit-tests:
+
+    needs: fe-dependencies
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - uses: actions/checkout@v2
+    - name: Load npm dependencies
+      uses: actions/cache@v2
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+
     - run: npm t -- --ci --reporters=jest-junit --runInBand

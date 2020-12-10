@@ -107,7 +107,7 @@ jobs:
         ./my-action/cs2pr.php --prefix=PHPSTAN phpstan.xml
 
 
-  unit-tests:
+  be-unit-tests:
 
     needs: be-dependencies
 
