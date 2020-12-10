@@ -51,6 +51,14 @@ jobs:
     - run: npm run eslint -- -o checkstyle-fe.xml -f junit
       continue-on-error: true
 
+    - name: Checkout Private GitHub Action Repo
+      uses: actions/checkout@v2
+      with:
+        repository: kduret/custom-github-action
+        path: my-action
+        ref: master
+        token: ${{ secrets.custom_github_action }} # stored in GitHub secrets
+
     - name: Annotate PR from ESLINT result
       run: |
         ./my-action/cs2pr.php --prefix=ESLINT checkstyle-fe.xml
@@ -65,16 +73,5 @@ jobs:
         check_name: 'Coding style Report'
         report_paths: 'checkstyle-fe.xml'
         github_token: ${{ secrets.GITHUB_TOKEN }}
+
     - run: npm t -- --ci --reporters=jest-junit --runInBand
-    - uses: actions/upload-artifact@v2
-      if: ${{ always() }}
-      with:
-        name: unit-test-artifact
-        path: junit.xml
-    - name: Publish unit test report
-      uses: mikepenz/action-junit-report@v1
-      if: ${{ always() }}
-      with:
-        check_name: 'Unit test Report'
-        report_paths: 'junit.xml'
-        github_token: ${{ secrets.GITHUB_TOKEN }}

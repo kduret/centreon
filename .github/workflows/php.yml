@@ -26,24 +26,26 @@ jobs:
       with:
         path: vendor
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+
     - name: Install composer dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest
 
 
   be-style:
-    runs-on: ubuntu-latest
 
     needs: be-dependencies
 
+    runs-on: ubuntu-latest
+
     steps:
+
     - uses: actions/checkout@v2
     - name: Load composer dependencies
       uses: actions/cache@v2
       with:
         path: vendor
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-        # no restore-keys here, so we only accept this exact version
 
     - id: files
       uses: jitterbit/get-changed-files@v1
@@ -104,10 +106,12 @@ jobs:
       run: |
         ./my-action/cs2pr.php --prefix=PHPSTAN phpstan.xml
 
+
   unit-tests:
-    runs-on: ubuntu-latest
 
     needs: be-dependencies
+
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -119,10 +123,8 @@ jobs:
         # no restore-keys here, so we only accept this exact version
 
     - name: PHPUnit tests
-      uses: php-actions/phpunit@v1
-      with:
-        configuration: phpunit.xml
-        memory_limit: 256M
+      run: composer run test:ci
+
 #      continue-on-error: true
 
 #    - name: Publish Test Report
