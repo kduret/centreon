@@ -1,4 +1,4 @@
-name: PHP Composer
+name: Backend
 
 on:
   push:
@@ -9,6 +9,9 @@ on:
       - 'src/**'
       - 'www/**'
       - '!www/front_src/**'
+      - 'composer.*'
+      - 'doc/API/*.yaml'
+      - 'container.php'
 
 jobs:
 
