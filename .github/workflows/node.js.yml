@@ -90,4 +90,4 @@ jobs:
         path: node_modules
         key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
 
-    - run: npm t -- --ci --reporters=jest-junit --runInBand
+    - run: npm t -- --ci --reporters=jest-junit --maxWorkers=100%
