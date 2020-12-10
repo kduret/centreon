@@ -5,17 +5,20 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+    paths:
+      - 'src/**'
+      - 'www/**'
+      - '!www/front_src/**'
 
 jobs:
-  build:
+
+  be-dependencies:
+
     runs-on: ubuntu-latest
 
     steps:
 
     - uses: actions/checkout@v2
-
-    #- name: Validate composer.json and composer.lock
-    #  run: composer validate
 
     - name: Cache Composer
       uses: actions/cache@v2
@@ -27,13 +30,11 @@ jobs:
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest
 
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
 
-  style:
+  be-style:
     runs-on: ubuntu-latest
 
-    needs: build
+    needs: be-dependencies
 
     steps:
     - uses: actions/checkout@v2
@@ -106,7 +107,7 @@ jobs:
   unit-tests:
     runs-on: ubuntu-latest
 
-    needs: build
+    needs: be-dependencies
 
     steps:
     - uses: actions/checkout@v2

@@ -7,12 +7,13 @@ on:
   push:
     branches: [ master ]
   pull_request:
+    branches: [ master ]
     paths:
       - 'www/front_src/**'
-    branches: [ master ]
 
 jobs:
-  build:
+
+  fe-dependencies:
 
     runs-on: ubuntu-latest
 
@@ -27,19 +28,39 @@ jobs:
         # npm cache files are stored in `~/.npm` on Linux/macOS
         path: node_modules
         key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-npm-
+
     - run: npm ci
       if: steps.npm-cache.outputs.cache-hit != 'true'
+
+
+  fe-style:
+
+    needs: fe-dependencies
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - uses: actions/checkout@v2
+    - name: Load npm dependencies
+      uses: actions/cache@v2
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+
     - run: npm run eslint -- -o checkstyle-fe.xml -f junit
+      continue-on-error: true
+
+    - name: Annotate PR from ESLINT result
+      run: |
+        ./my-action/cs2pr.php --prefix=ESLINT checkstyle-fe.xml
+
     - uses: actions/upload-artifact@v2
-      if: ${{ always() }}
       with:
         name: checkstyle-artifact
         path: checkstyle-fe.xml
     - name: Publish coding style report
       uses: mikepenz/action-junit-report@v1
-      if: ${{ always() }}
       with:
         check_name: 'Coding style Report'
         report_paths: 'checkstyle-fe.xml'
