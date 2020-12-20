@@ -29,8 +29,7 @@ use FOS\RestBundle\Controller\AbstractFOSRestController;
  *
  * @package Centreon\Application\Controller
  */
-abstract class AbstractController extends AbstractFOSRestController
-{
+abstract class AbstractController extends AbstractFOSRestController {
     public const ROLE_API_REALTIME = 'ROLE_API_REALTIME';
     public const ROLE_API_REALTIME_EXCEPTION_MESSAGE = 'You are not authorized to access this resource';
     public const ROLE_API_CONFIGURATION = 'ROLE_API_CONFIGURATION';

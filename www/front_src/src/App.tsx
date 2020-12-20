@@ -6,7 +6,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
 
-import React, { Component, ReactNode } from 'react';
+import React, { Component, ReactNode } from 'react' ;
 
 import { hot } from 'react-hot-loader/root';
 import { connect } from 'react-redux';
